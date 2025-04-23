@@ -177,7 +177,7 @@
 
 <header>
 	<div class="header-content">
-        <h2 style="color: red;">This should be red</h2>
+        <h2 style="color: red;">This should be red 2</h2>
 		<h1 class="header-title">Threadpicker</h1>
 		<button class="question-button" on:click={() => showHelp = !showHelp}>﹖</button>
 	</div>
