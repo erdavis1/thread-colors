@@ -10,7 +10,7 @@ const config = {
         appDir: 'app',
         adapter: adapter(),
         paths: {
-            base: process.argv.includes('dev') ? '' : '/thread-colors'
+            base: '' /* process.argv.includes('dev') ? '' : '/thread-colors' */
         }
     }
 };
