@@ -1,10 +1,17 @@
 import adapter from '@sveltejs/adapter-static';
+import {
+    vitePreprocess
+} from '@sveltejs/kit/vite';
 
-export default {
-	kit: {
-		adapter: adapter(),
-		paths: {
-			base: ''  // ← important: empty string for root domain
-		}
-	}
+/** @type {import('@sveltejs/kit').Config} */
+const config = {
+    preprocess: vitePreprocess(),
+
+    kit: {
+        adapter: adapter(),
+        paths: {
+            base: process.env.NODE_ENV === 'production' ? 'https://erdavis1.github.io/thread-colors' : '',
+        }
+    }
 };
+export default config;
