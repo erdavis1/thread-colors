@@ -9,7 +9,7 @@ const config = {
     kit: {
         adapter: adapter(),
         paths: {
-            base: dev ? '' : '/thread-colors'
+            base: process.argv.includes('dev') ? '' : '/thread-colors'
         }
     }
 };
