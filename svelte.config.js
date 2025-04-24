@@ -7,6 +7,7 @@ const config = {
 	preprocess: vitePreprocess(),
 
     kit: {
+        appDir: 'app',
         adapter: adapter(),
         paths: {
             base: process.argv.includes('dev') ? '' : '/thread-colors'
