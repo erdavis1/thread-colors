@@ -8,6 +8,7 @@ const config = {
 
     kit: {
         adapter: adapter(),
+        trailingSlash: 'always',
         paths: {
             base: process.env.NODE_ENV === 'production' ? '/thread-colors' : '',
 			assets: process.env.NODE_ENV === 'production' ? 'https://erdavis1.github.io/thread-colors' : ''
