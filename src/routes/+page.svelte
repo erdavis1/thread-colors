@@ -177,7 +177,6 @@
 
 <header>
 	<div class="header-content">
-
 		<h1 class="header-title">Threadpicker</h1>
 		<button class="question-button" on:click={() => showHelp = !showHelp}>﹖</button>
 	</div>
@@ -233,9 +232,9 @@
                 <div class="section-body">
                     <div class="hex-input-row">
                         <div class="hex-swatch" on:click={openColorPicker} style="cursor: pointer; background-color: {colorShift(baseHex, adjustR, adjustG, adjustB, adjustLight)};"></div>
-                        <input type="color" id="color-picker" value={baseHex} on:input={handleColorPick} style="display: none;"/>
+                        <input type="color" id="color-picker" value={baseHex} on:input={handleColorPick} style="opacity: 0; position: absolute; width: 1px; height: 1px; pointer-events: none;"/>
                         <input type="Text" class = "search-hex" bind:value={baseHex} placeholder = 'Hex' />
-                       
+                  
                     </div>
                         <input type="Text" class = "search-desc" bind:value={searchDesc} placeholder = 'Description or code'/>
                 </div>
