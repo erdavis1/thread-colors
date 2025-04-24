@@ -18,7 +18,7 @@
     //helper variables
     let showSliders = false;
 	let showSearch = true;
-    let showHelp = false;
+    let showHelp = true;
     let showPhoto = true
 	let clickTimer = null;
 
@@ -178,7 +178,7 @@
 <header>
 	<div class="header-content">
 		<h1 class="header-title">Threadpicker</h1>
-		<button class="question-button" on:click={() => showHelp = !showHelp}>﹖</button>
+		<button class="question-button" on:click={() => showHelp = !showHelp}>?</button>
 	</div>
 
 </header>
@@ -190,31 +190,38 @@
     {#if showHelp}
         <div class="form-section">
             <div class="section-header">
-                    <h3>How to Use Threadpicker
+                    <h3>I want to...
                         <span>
                         <button class="cancel" type="button" on:click={showHelp = false}>×</button></span>
                     </h3>
             </div>
             <div class="section-body">
-                <b>Search box</b>
+                <b>Find the closest floss match to a hex code</b>   
                     <ul>
-                        <li>Click the <strong>color preview circle</strong> to select a color</li>
-                        <li>Type a <strong>hex code</strong> to sort table by similarity</li>
-                        <li>Filter floss by <strong>id or name</strong></li>
-                        <li>Pick which <strong>brands</strong> of floss to show</li>
+                        <li>Enter a hex code in the box OR click on the swatch to pick a color</li>
+                        <li>Optionally, add in additional criteria in the Search box</li>
+                        <li>Color list will auto-sort to have the closest match on top</li>
                     </ul>
-                <b>Tweak color box</b>
+
+                    <b>Find the closest match to another floss</b>   
                     <ul>
-                        <li>Use the <strong>sliders</strong> for finer control over the color</li>
-                        <li>Click the <strong>↺</strong> to reset the sliders</li>
+                        <li>Use the search criteria to find your starting floss</li>
+                        <li>Click on its color swatch to sort the table by similarity </li>
+                        <li>Remove your search criteria to show all flosses<br>
+                            <i>Alteratively, click the X above the swatches to show everything</i></li>
                     </ul>
-                <b>Color table</b>
-                    <ul>
-                        <li>Table shows the <strong>colors</strong> that meet your criteria</li>
-                        <li>Click the <strong>color preview circle</strong> to sort for similar colors</li>
-                        <li>Double click the <strong>color preview circle</strong> to see other colors in that family</li>
-                        <li>Click the <strong>x</strong> to remove your filters and color tweaks</li>
-                    </ul>
+
+                    <b>See all floss colors in a family</b>
+                    <uL>
+                        <li>Use the search criteria to find your starting floss</li>
+                        <li>Double click on its color swatch</li>
+                        <li>When you're done, click the X above the swatches to remove the filter</li>
+                    </uL>
+
+                    <b>Find the closest floss to a color in a picture I have</b>
+                    <ul><li>Coming soon, check back in a bit!</li></ul>
+
+               
                 <i>Contact erinrdavis1@gmail.com with questions, concerns, hopes, dreams, or fears</i>
                 </div>
             </div>
@@ -375,7 +382,7 @@
 	margin: auto 0;
 	background: none;
 	border: none;
-	font-size: 1rem;
+	font-size: 1.2rem;
 	cursor: pointer;
 	color: #6C6C6C;
 }
