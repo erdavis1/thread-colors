@@ -18,7 +18,7 @@
     //helper variables
     let showSliders = false;
 	let showSearch = true;
-    let showHelp = true;
+    let showHelp = false;
     let showPhoto = true
 	let clickTimer = null;
 
@@ -171,6 +171,20 @@
         applyFilters(baseHex, searchBrands, searchDesc, adjustR, adjustG, adjustB, adjustLight);
     } 
 
+
+//image picker
+let imageSrc = '';
+	
+	function handleFileChange(event) {
+		const file = event.target.files[0];
+		if (file) {
+			const reader = new FileReader();
+			reader.onload = (e) => {
+				imageSrc = e.target.result;
+			};
+			reader.readAsDataURL(file);
+		}
+	}
 </script>
 
 
@@ -218,11 +232,19 @@
                         <li>When you're done, click the X above the swatches to remove the filter</li>
                     </uL>
 
-                    <b>Find the closest floss to a color in a picture I have</b>
-                    <ul><li>Coming soon, check back in a bit!</li></ul>
+                    <b>Provide questions, comments, concerns, hopes, dreams, or fears</b>
+                    <ul><li>Contact me at erinrdavis1@gmail.com</li></ul>
 
-               
-                <i>Contact erinrdavis1@gmail.com with questions, concerns, hopes, dreams, or fears</i>
+               <div>
+                    <i style = "font-size:0.8rem">
+                        DMC hex codes via <a href="https://dmc.crazyartzone.com/">Crazy Art Zone</a><br>
+                        Cosmo hex codes via <a href="https://tallcoleman.me/crafts/2022/01/01/experimenting-rgb-colours-cosmo-embroidery-floss.html">Ben Coleman</a><br>
+                        Anchor hex codes via <a href="https://www.ursasoftware.com/macstitch/">WinStitch</a><br>
+                       
+                    </i>
+               </div>
+            
+                
                 </div>
             </div>
     {/if}
@@ -314,6 +336,10 @@
                 </div>
             {/if}
          </div>
+
+          <!-- pick from photo -->
+
+
 	</form>
 
     <table class="data-table">
