@@ -223,43 +223,45 @@
 
 	</form>
 
-    <table class="data-table">
-        <thead>
-            <tr>
-                <th><button class="button" type="button" on:click={resetFilters}>×</button></th>
-                <th>Brand</th>
-                <th>ID</th>
-                <th>Description</th>
-                <th>Hex</th>
-            </tr>
-        </thead>
-        <tbody>
-            {#each data as d}
-                <tr >
-                    <td 
-                        on:click={() => {resetSliders(); baseHex = d.hex;}} 
-                        on:dblclick={() => {filterFamily(d.id, d.brand, d.family)}}
-                        style="cursor: pointer;">
-                        <div
-                            class="swatch-circle"
-		                    style="background-color: {d.hex};"
-                        ></div></td>
-                    <td>{d.brand}</td>
-                    <td>{d.id}</td>
-                    <td>{d.desc}</td>
-                    <td>{d.hex}</td>
-                </tr>
-            {/each}
-        </tbody>
-    </table>
 
+    <div class="table-wrapper">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th><button class="button" type="button" on:click={resetFilters}>×</button></th>
+                    <th>Brand</th>
+                    <th>ID</th>
+                    <th>Description</th>
+                    <th>Hex</th>
+                </tr>
+            </thead>
+            <tbody>
+                {#each data as d}
+                    <tr >
+                        <td 
+                            on:click={() => {resetSliders(); baseHex = d.hex;}} 
+                            on:dblclick={() => {filterFamily(d.id, d.brand, d.family)}}
+                            style="cursor: pointer;">
+                            <div
+                                class="swatch-circle"
+                                style="background-color: {d.hex};"
+                            ></div></td>
+                        <td>{d.brand}</td>
+                        <td>{d.id}</td>
+                        <td>{d.desc}</td>
+                        <td>{d.hex}</td>
+                    </tr>
+                {/each}
+            </tbody>
+        </table>
+    </div>
 
 
 </main>
 
 <style>
 header {
-	background-color: #F0F0F0;
+	background-color: #f7f7f7;
 	padding: 0.5rem 1rem;np
 	position: relative;
 
@@ -298,6 +300,13 @@ header {
 
 
 /* TABLE */
+.table-wrapper {
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: auto; 
+}
+
+
 .swatch-circle {
     width: 20px;
     height:20px;
@@ -312,14 +321,18 @@ header {
     border-collapse: collapse;
     font-size: .9rem;
     vertical-align: middle;
-    margin: 2rem auto; 
+    margin: 0rem auto; 
     background: #FFFFFF;
+    
 }
 
 
 .data-table th {
     background: #FFFFFF;
     padding: 0.5rem;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    
 }
 
 
