@@ -5,7 +5,11 @@ body {
 	color: #333;
 }
 
-h1, h2, h3 {
+h1 {
+	font-family: 'Lobster';
+}
+
+h2, h3 {
     font-family: 'Inter', sans-serif;
 	font-weight: 600;
 }
@@ -16,3 +20,50 @@ main {
     font-family: 'Inter', sans-serif;
 }
 
+
+.button{
+	background: none;
+	border: none;
+	padding: 0;
+	margin: 0;
+	font-size: 1rem;
+	cursor: pointer;
+	color: #6C6C6C;
+	text-align: right;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	gap: 0.2rem;
+	max-width: 400px;
+	width: 100%;
+	margin: 2rem auto;
+}
+
+.form-section {
+	border: 1px solid #F0F0F0;
+	border-radius: 4px;
+	overflow: hidden;
+	margin: 0;
+	padding: 100;
+}
+
+.form-section h3 {
+	margin: 0;
+	padding: 0.2rem .5rem;
+	background: #FFFFFF;
+	color: #222222;
+	cursor: pointer;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 1rem;
+	font-weight: 500;
+	
+}
+
+.section-body {
+	padding: 0.5rem 1rem;
+	background: #FFFFFF;
+}

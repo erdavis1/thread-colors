@@ -1,8 +1,15 @@
 <script>
 // @ts-nocheck
 
-    //data variables
+    //components
     import '../app.css';
+    import Help from '$lib/Help.svelte';
+    import Search from '$lib/Search.svelte';
+    import Sliders from '$lib/Sliders.svelte';
+    import PhotoPicker from '$lib/PhotoPicker.svelte';
+
+    //data variables
+
     import rawData from '../data/data.json';
     let data = rawData;
 
@@ -105,11 +112,11 @@
             data = [...rawData]
                 .filter(d =>
                     //filter by brand
-                    (brands.length === 0 || brands.includes(d.brand)) &&
+                    (brands.includes(d.brand)) &&
                     //filter by description/id
                     (desc.trim() === '' ||
                         d.desc.toLowerCase().includes(desc.toLowerCase()) ||
-                        d.id.toLowerCase().includes(desc.toLowerCase()))
+                        d.id.toLowerCase().includes(desc.toLowerCase()))  
                 )
                 //  sort by color
                 .sort((a, b) => {
@@ -129,6 +136,7 @@
         adjustG=0;
         adjustB=0;
         adjustLight=0;
+
     }
     
     function resetSliders() {
@@ -140,7 +148,8 @@
 
     function filterFamily(id = 310, brand = 'DMC', family = 97) {
         clearTimeout(clickTimer); // cancel the pending click
-
+        
+  
         if (family) {
             data = [...rawData]
                 .filter(d => d.brand === brand && d.family === family)
@@ -148,204 +157,76 @@
         } else {
             data = [...rawData]
                 .filter(d => d.brand === brand && d.id === id);
-        }
+        }  
     }
 
 
-    //color picker
-    function openColorPicker() {
-            // programmatically click the hidden color input
-            const input = document.getElementById('color-picker');
-            if (input) {
-                input.click();
-            }
-        }
 
-        function handleColorPick(event) {
-            baseHex = event.target.value;
-        }
+ 
 
     //reactively apply filters any time the search criteria are changed
     $: if (baseHex !== undefined && searchDesc !== undefined && searchBrands !== undefined &&
-                adjustR !== undefined && adjustG !== undefined && adjustB!== undefined &&  adjustLight!== undefined ) {
+                adjustR !== undefined && adjustG !== undefined && adjustB!== undefined &&  adjustLight!== undefined) {
         applyFilters(baseHex, searchBrands, searchDesc, adjustR, adjustG, adjustB, adjustLight);
     } 
 
 
-//image picker
-let imageSrc = '';
-	
-	function handleFileChange(event) {
-		const file = event.target.files[0];
-		if (file) {
-			const reader = new FileReader();
-			reader.onload = (e) => {
-				imageSrc = e.target.result;
-			};
-			reader.readAsDataURL(file);
-		}
-	}
+
 </script>
 
 
 
 <header>
 	<div class="header-content">
-		<h1 class="header-title">Threadpicker</h1>
+		<h1 class="header-title" style="color: {baseHex}; ">Threadpicker</h1>
 		<button class="question-button" on:click={() => showHelp = !showHelp}>?</button>
 	</div>
-
 </header>
-
 
 
 <main>
      <!-- help box -->
     {#if showHelp}
-        <div class="form-section">
-            <div class="section-header">
-                    <h3>I want to...
-                        <span>
-                        <button class="cancel" type="button" on:click={showHelp = false}>×</button></span>
-                    </h3>
-            </div>
-            <div class="section-body">
-                <b>Find the closest floss match to a hex code</b>   
-                    <ul>
-                        <li>Enter a hex code in the box OR click on the swatch to pick a color</li>
-                        <li>Optionally, add in additional criteria in the Search box</li>
-                        <li>Color list will auto-sort to have the closest match on top</li>
-                    </ul>
-
-                    <b>Find the closest match to another floss</b>   
-                    <ul>
-                        <li>Use the search criteria to find your starting floss</li>
-                        <li>Click on its color swatch to sort the table by similarity </li>
-                        <li>Remove your search criteria to show all flosses<br>
-                            <i>Alteratively, click the X above the swatches to show everything</i></li>
-                    </ul>
-
-                    <b>See all floss colors in a family</b>
-                    <uL>
-                        <li>Use the search criteria to find your starting floss</li>
-                        <li>Double click on its color swatch</li>
-                        <li>When you're done, click the X above the swatches to remove the filter</li>
-                    </uL>
-
-                    <b>Provide questions, comments, concerns, hopes, dreams, or fears</b>
-                    <ul><li>Contact me at erinrdavis1@gmail.com</li></ul>
-
-               <div>
-                    <i style = "font-size:0.8rem">
-                        DMC hex codes via <a href="https://dmc.crazyartzone.com/">Crazy Art Zone</a><br>
-                        Cosmo hex codes via <a href="https://tallcoleman.me/crafts/2022/01/01/experimenting-rgb-colours-cosmo-embroidery-floss.html">Ben Coleman</a><br>
-                        Anchor hex codes via <a href="https://www.ursasoftware.com/macstitch/">WinStitch</a><br>
-                       
-                    </i>
-               </div>
-            
-                
-                </div>
-            </div>
+        <Help onClose={() => showHelp = false} />
     {/if}
 
 	<form class = 'userinfo' on:submit|preventDefault={applyFilters(baseHex, searchBrands, searchDesc, adjustR, adjustG, adjustB, adjustLight)}>
         <!-- search box -->
-        <div class="form-section">
-            <h3 on:click={() => showSearch = !showSearch}>
-                Search
-                <span>{showSearch ? '▾' : '▸'}</span>
-            </h3>
-        
-            {#if showSearch}
-                <div class="section-body">
-                    <div class="hex-input-row">
-                     <!--    <div class="hex-swatch" on:click={openColorPicker} style="cursor: pointer; background-color: {colorShift(baseHex, adjustR, adjustG, adjustB, adjustLight)};"></div>
- -->
-                        <label style="cursor: pointer;">
-                            <div class="hex-swatch" style="background-color: {colorShift(baseHex, adjustR, adjustG, adjustB, adjustLight)};"></div>
-                            <input
-                                type="color"
-                                bind:value={baseHex}
-                                on:input={handleColorPick}
-                                style="opacity: 0; position: absolute; width: 1px; height: 1px;"
-                            />
-                        </label>
-
-                        <input type="color" id="color-picker" value={baseHex} on:input={handleColorPick} style="opacity: 0; position: absolute; width: 1px; height: 1px; pointer-events: none;"/>
-                        <input type="Text" class = "search-hex" bind:value={baseHex} placeholder = 'Hex' />
-                  
-                    </div>
-                        <input type="Text" class = "search-desc" bind:value={searchDesc} placeholder = 'Description or code'/>
-                </div>
-
-                <fieldset>
-                    <label>
-                        <input type="checkbox" bind:group={searchBrands} value="DMC" />
-                        DMC
-                    </label>
-                    <label>
-                        <input type="checkbox" bind:group={searchBrands} value="Anchor" />
-                        Anchor
-                    </label>
-                    <label>
-                        <input type="checkbox" bind:group={searchBrands} value="Cosmo" />
-                        Cosmo
-                    </label>
-                </fieldset>
-            {/if}
-        </div>
+        <Search
+            bind:baseHex
+            bind:searchDesc
+            bind:searchBrands
+            bind:adjustR
+            bind:adjustG
+            bind:adjustB
+            bind:adjustLight
+            {colorShift}
+            {resetSliders}
+           />
+   
 
         <!-- color sliders -->
-        <div class="form-section">
-            <div class="section-header" on:click={() => showSliders = !showSliders}>
-                <h3>Tweak color
-                    <span>
-                    <button class="reset-button" type="button" on:click|stopPropagation={resetSliders}>↺</button>
-                    {showSliders ? '▾' : '▸'}</span>
-            </h3>
-            </div>
+        <Sliders
+            bind:adjustR
+            bind:adjustG
+            bind:adjustB
+            bind:adjustLight
+            {resetSliders}
+       />
 
-            {#if showSliders}
-                <div class="section-body">
-                    <div class="slider-grid">
-                        <span class="label-left">Cyan</span>
-                        <input type="range" class="red-cyan" min="-100" max="100" step="1" bind:value={adjustR} />
-                        <span class="label-right">Red</span>
-                    </div>
-                    
-                    <div class="slider-grid">
-                        <span class="label-left">Magenta</span>
-                        <input type="range" class="green-magenta" min="-100" max="100" step="1" bind:value={adjustG} />
-                        <span class="label-right" >Green</span>
-                    </div>
-                    
-                    <div class="slider-grid">
-                        <span class="label-left">Yellow</span>
-                        <input type="range" class="blue-yellow" min="-100" max="100" step="1" bind:value={adjustB} />
-                        <span class="label-right">Blue</span>
-                    </div>
-                    
-                    <div class="slider-grid">
-                        <span class="label-left">Darker</span>
-                        <input type="range" class="light-dark" min="-1" max="1" step=".01" bind:value={adjustLight} />
-                        <span class="label-right">Lighter</span>
-                    </div>
-                    
-                  
-                </div>
-            {/if}
-         </div>
-
-          <!-- pick from photo -->
-
+        <!-- Pick color from photo -->
+        <PhotoPicker
+            bind:baseHex
+            {resetSliders}
+            {rgbToHex}
+        />
 
 	</form>
 
     <table class="data-table">
         <thead>
             <tr>
-                <th><button class="cancel" type="button" on:click={resetFilters}>×</button></th>
+                <th><button class="button" type="button" on:click={resetFilters}>×</button></th>
                 <th>Brand</th>
                 <th>ID</th>
                 <th>Description</th>
@@ -377,10 +258,11 @@ let imageSrc = '';
 </main>
 
 <style>
-	header {
+header {
 	background-color: #F0F0F0;
 	padding: 0.5rem 1rem;np
 	position: relative;
+
 }
 
 .header-content {
@@ -398,6 +280,7 @@ let imageSrc = '';
 	font-size: 1.5rem;
 	font-weight: 500;
 	margin: 0;
+
 }
 
 .question-button {
@@ -413,210 +296,36 @@ let imageSrc = '';
 	color: #6C6C6C;
 }
 
-	form {
-		display: flex;
-		flex-direction: column;
-		gap: 0.2rem;
-		max-width: 400px;
-		margin: 2rem auto;
-	}
 
-    .form-section {
-		border: 1px solid #F0F0F0;
-		border-radius: 4px;
-		overflow: hidden;
-        margin: 0;
-	    padding: 100;
-	}
+/* TABLE */
+.swatch-circle {
+    width: 20px;
+    height:20px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+}
 
-	.form-section h3 {
-		margin: 0;
-		padding: 0.2rem .5rem;
-		background: #FFFFFF;
-        color: #222222;
-		cursor: pointer;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		font-size: 1rem;
-        font-weight: 500;
-        
-	}
-
-	.section-body {
-		padding: 0.5rem 1rem;
-		background: #FFFFFF;
-	}
-
-    /* TABLE */
-    .swatch-circle {
-        width: 20px;
-        height:20px;
-        border: 1px solid #ccc;
-        border-radius: 15px;
-    }
-
-    .data-table {
-        text-align: center;
-        width: 100%;
-        max-width: 500px; 
-        border-collapse: collapse;
-        font-size: .9rem;
-        vertical-align: middle;
-        margin: 2rem auto; 
-        background: #FFFFFF;
-    }
-
-    .cancel{
-        background: none;
-        border: none;
-        padding: 0;
-        margin: 0;
-        font-size: 1rem;
-        cursor: pointer;
-	    color: #6C6C6C;
-        background: #FFFFFF;
-    }
-
-    .data-table th {
-	    background: #FFFFFF;
-        padding: 0.5rem;
-    }
+.data-table {
+    text-align: center;
+    width: 100%;
+    max-width: 500px; 
+    border-collapse: collapse;
+    font-size: .9rem;
+    vertical-align: middle;
+    margin: 2rem auto; 
+    background: #FFFFFF;
+}
 
 
-    .data-table tr {
-	    border-bottom: 1px solid #eee; 
-    }
-
-/* SEARCH */
-    .hex-input-row {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        width: 100%; /* optional — lets it stretch across a container */
-        margin-bottom: 0.25rem;
-    }
-
-    input.search-hex {
-        width: 25%;
-        padding: 0.5rem;
-        font-size: 0.8rem;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box; 
-        
-
-    }
-
-    input.search-desc {
-        width: 100%;
-        padding: 0.5rem;
-        font-size: 0.8rem;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box; 
-    }
-
-    .hex-swatch {
-        width: 25px;
-        height: 25px;
-        border: 1px solid #ccc;
-        border-radius: 25px;
-    }
-
-    /* BRANDS */
-    fieldset {
-        border: none;
-        background: #FFFFFF;
-        display: flex;
-        gap: 1rem;
-        flex-wrap: wrap;
-        justify-content: left;
-    }
-
-    fieldset label {
-        display: flex;
-        align-items: left;
-        gap: 0.5rem;
-        font-size: 0.95rem;
-        cursor: pointer;
-    }
+.data-table th {
+    background: #FFFFFF;
+    padding: 0.5rem;
+}
 
 
-    /* SLIDERS */
-    input[type="range"]{
-		width: 100%;
-		appearance: none;
-		outline: none;
-		cursor: pointer;
-		margin-top: 0.5rem;
-	}
-
-    input[type="range"].red-cyan {
-		background: linear-gradient(to right, #34F2F2,#8f8f8f, #F21A0C);
-	}
-
-    input[type="range"].green-magenta {
-		background: linear-gradient(to right, #F20EF2,#8f8f8f, #1EF20C);
-	}
-
-    input[type="range"].blue-yellow {
-		background: linear-gradient(to right, #F2F20E,#8f8f8f, #290EF2);
-	}
-
-    input[type="range"].light-dark {
-		background: linear-gradient(to right, black,#8f8f8f, white);
-	}
-
-	input[type="range"]::-webkit-slider-thumb {
-		appearance: none;
-		width: 16px;
-		height: 16px;
-		border-radius: 50%;
-		background: #fff;
-		border: 1px solid #999;
-	}
-
-    .slider-grid {
-		display: grid;
-		grid-template-columns: auto 1fr auto;
-		align-items: center;
-		column-gap: 0.75rem;
-		margin-bottom: 0.1rem;
-	}
-
-
-    .slider-grid span {
-        width: 4rem;
-        font-size: 0.9rem;
-        position: relative;
-        top: 3px; 
-        
-    }
-    .label-left {
-        text-align: right;
-    }
-
-    .label-right {
-        text-align: left;
-    }
-    
-
-	input[type="range"] {
-		width: 100%;
-		height: 10px;
-		border-radius: 3px;
-		cursor: pointer;
-	}
-
-    .reset-button {
-        padding-right: 0.5rem;
-		background: none;
-		border: none;
-		font-size: 1rem;
-		cursor: pointer;
-        color: #6C6C6C;
-	}
+.data-table tr {
+    border-bottom: 1px solid #eee; 
+}
 
 
 </style>
