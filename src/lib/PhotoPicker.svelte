@@ -160,11 +160,15 @@ function handleTouchStart(event) {
 
 function handleTouchMove(event) {
 	if (activeTouchMode === 'drag' && event.touches.length === 1) {
-		event.preventDefault();
+        event.preventDefault();
         dragStarted = true;
-        lastMouseX = event.clientX;
-        lastMouseY = event.clientY;
-		handleDragging(event.touches[0]);
+
+        const touch = event.touches[0];
+
+        lastMouseX = touch.clientX;
+        lastMouseY = touch.clientY;
+
+        handleDragging(touch);
 	} else if (activeTouchMode === 'zoom' && event.touches.length === 2) {
 		event.preventDefault();
 
@@ -291,7 +295,7 @@ function clampPan() {
             <input type="file" accept="image/*" on:change={handleFileChange} />
             {#if imageSrc}
                 <!-- svelte-ignore a11y_no_static_element_interactions -->
-                <div style="position: relative;  width: 100%; max-width: 600px;  touch-action: none;"
+                <div style="position: relative;  width: 100%; max-width: 600px;  touch-action: none; "
                     bind:this={containerRef}    
                     on:wheel={handleWheelZoom}
                     on:mousedown={startDragging}
