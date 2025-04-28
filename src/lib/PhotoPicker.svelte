@@ -6,7 +6,7 @@ export let rgbToHex = () => {};
 
 
 //image picker
-let showPhoto = true;
+let showPhoto = false;
 let imageSrc = '';
 let imgRef;
 let canvasRef;

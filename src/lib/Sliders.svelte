@@ -5,7 +5,7 @@
     export let adjustB=0;
     export let adjustLight=0;
     export let resetSliders = () => {}; 
-    let showSliders = true;
+    let showSliders = false;
 </script>
 
 
