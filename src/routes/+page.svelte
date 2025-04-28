@@ -23,10 +23,10 @@
     let adjustLight = 0;
 
     //helper variables
+    let showSearch = true;
     let showSliders = false;
-	let showSearch = true;
     let showHelp = false;
-    let showPhoto = true
+    let showPhoto = false
 	let clickTimer = null;
 
 
@@ -272,7 +272,6 @@ header {
 	position: relative;
 	max-width: 800px;
 	margin: 0 auto;
-	height: 2rem; /* make sure there's enough vertical space */
 }
 
 .header-title {
@@ -301,7 +300,7 @@ header {
 
 /* TABLE */
 .table-wrapper {
-  max-height: 400px;
+  max-height: 500px;
   overflow-y: auto;
   overflow-x: auto; 
 }
