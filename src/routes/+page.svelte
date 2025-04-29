@@ -153,7 +153,7 @@
         if (family) {
             data = [...rawData]
                 .filter(d => d.brand === brand && d.family === family)
-                .sort((a, b) => a.hex.localeCompare(b.hex));
+                .sort((a, b) => a.lightness=b.lightness);
         } else {
             data = [...rawData]
                 .filter(d => d.brand === brand && d.id === id);

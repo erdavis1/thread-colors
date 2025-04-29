@@ -41,7 +41,7 @@
                 <ul class = "sources">
                     <li>DMC hex codes via <a href="https://dmc.crazyartzone.com/">Crazy Art Zone</a></li>
                     <li>Cosmo hex codes via <a href="https://tallcoleman.me/crafts/2022/01/01/experimenting-rgb-colours-cosmo-embroidery-floss.html">Ben Coleman</a></li>
-                    <li>Anchor hex codes via <a href="https://www.ursasoftware.com/macstitch/">WinStitch</a></li>
+                    <li>Anchor hex codes sampled from <a href="https://mayagobelin.com/wp-content/uploads/2020/09/Anchor-Color-Chart-MayaNeedlepoin.com_.png">Maya Needlepoint</a> and may not be totally accurate</li>
             </ul>
             </i>
         </div>
